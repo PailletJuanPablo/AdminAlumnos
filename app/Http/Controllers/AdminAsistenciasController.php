@@ -30,7 +30,7 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Alumno","name"=>"alumno_id","join"=>"alumnos,nombre"];
+			$this->col[] = ["label"=>"Alumno","name"=>"alumno_id","join"=>"alumnos,apellido"];
 			$this->col[] = ["label"=>"Clase","name"=>"clase_id","join"=>"clases,fecha"];
 			$this->col[] = ["label"=>"Asistio","name"=>"asistio"];
 			$this->col[] = ["label"=>"Observaciones","name"=>"observaciones"];
@@ -46,8 +46,8 @@
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Alumno Id','name'=>'alumno_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'alumno,id'];
-			//$this->form[] = ['label'=>'Clase Id','name'=>'clase_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'clase,id'];
+			//$this->form[] = ['label'=>'Alumno','name'=>'alumno_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'alumnos,nombre'];
+			//$this->form[] = ['label'=>'Clase','name'=>'clase_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'clases,fecha'];
 			//$this->form[] = ['label'=>'Asistio','name'=>'asistio','type'=>'checkbox','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'SI;NO'];
 			//$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'text','width'=>'col-sm-10'];
 			# OLD END FORM
@@ -81,8 +81,8 @@
 			$this->addaction = array();
 			
 
-			$this->addaction[] = ['label'=>'MARCAR PRESENTE','icon'=>'fa fa-check','color'=>'success','url'=>'http://localhost:3623/regionalll/regional_final/public/asistencia/SI/[id]'];
-			$this->addaction[] = ['label'=>'MARCAR AUSENTE','icon'=>'fa fa-check','color'=>'danger','url'=>'http://localhost:3623/regionalll/regional_final/public/asistencia/NO/[id]'];
+			$this->addaction[] = ['label'=>'MARCAR PRESENTE','icon'=>'fa fa-check','color'=>'success','url'=>'http://regional.esy.es/AdminAlumnos/public/asistencia/SI/[id]'];
+			$this->addaction[] = ['label'=>'MARCAR AUSENTE','icon'=>'fa fa-check','color'=>'danger','url'=>'http://regional.esy.es/AdminAlumnos/public/asistencia/NO/[id]'];
 
 
 			
@@ -250,7 +250,20 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	            
+            if (CRUDBooster::myPrivilegeName() == 'Capacitador' ){
+				$id = CRUDBooster::myId();
+				$idCurso = DB::table('cms_users')->where('id', $id)->first()->actividad_id;
+                $alumnosCurso = DB::table("alumnos")->where("actividad_id",$idCurso)->get();
+                $ids_alumnos = [];
+
+                foreach($alumnosCurso as $alumno){
+                    array_push($ids_alumnos,$alumno->id);
+                }
+
+				$query->whereIn('alumno_id', $ids_alumnos);
+
+
+			}
 	    }
 
 	    /*

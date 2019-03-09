@@ -5,14 +5,14 @@
 	use DB;
 	use CRUDBooster;
 
-	class AdminPagosController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminAlumnosController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "id";
+			$this->title_field = "nombre";
 			$this->limit = "20";
-			$this->orderby = "id,desc";
+			$this->orderby = "nombre,asc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -25,41 +25,66 @@
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
-			$this->table = "pagos";
+			$this->table = "alumnos";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Fecha Pago","name"=>"fecha_pago"];
-			$this->col[] = ["label"=>"Alumno","name"=>"alumno_id","join"=>"alumnos,apellido"];
-			$this->col[] = ["label"=>"Monto Pagado","name"=>"monto_pagado"];
-			$this->col[] = ["label"=>"Numero Cuota","name"=>"numero_cuota"];
-			$this->col[] = ["label"=>"Observaciones","name"=>"observaciones"];
-			$this->col[] = ["label"=>"Modalidad de Pago","name"=>"tipos_pago_id","join"=>"tipos_pago,nombre"];
+			$this->col[] = ["label"=>"Nombre","name"=>"nombre"];
+			$this->col[] = ["label"=>"Apellido","name"=>"apellido"];
+			$this->col[] = ["label"=>"Telefono","name"=>"telefono"];
+			$this->col[] = ["label"=>"Mail","name"=>"mail"];
+			$this->col[] = ["label"=>"Inscripto A","name"=>"actividad_id","join"=>"actividades,nombre"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Fecha Pago','name'=>'fecha_pago','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Modalidad de Pago','name'=>'tipos_pago_id','type'=>'select2','validation'=>'required','width'=>'col-sm-9','datatable'=>'tipos_pago,nombre'];
-			$this->form[] = ['label'=>'Alumno','name'=>'alumno_id','type'=>'select2','validation'=>'required','width'=>'col-sm-9','datatable'=>'alumnos,apellido'];
-			$this->form[] = ['label'=>'Monto Pagado','name'=>'monto_pagado','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','placeholder'=>'Ingresar solo números sin signos de $'];
-			$this->form[] = ['label'=>'Numero de Cuota','name'=>'numero_cuota','type'=>'select2','validation'=>'required','width'=>'col-sm-10','dataenum'=>'0;1;2;3;4;5;6;7;8;9;10'];
-			$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','validation'=>'min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Presentó Fotocopia','name'=>'Presentó Fotocopia','type'=>'checkbox','validation'=>'required','width'=>'col-sm-9','dataenum'=>'SI;NO'];
-			$this->form[] = ['label'=>'Ref Nº','name'=>'Ref Nº','type'=>'text','width'=>'col-sm-9'];
+			$this->form[] = ["label"=>"Detalles Personales","type"=>"header","name"=>"header"];
+
+			$this->form[] = ['label'=>'Nombre','name'=>'nombre','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Apellido','name'=>'apellido','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			if (CRUDBooster::myPrivilegeName() !== 'Capacitador'){
+				$this->form[] = ['label'=>'Actividad Académica','name'=>'actividad_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'actividades,nombre'];
+			}
+			
+			
+			
+			$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','placeholder'=>'Introduce una dirección de correo electrónico válida'];
+			$this->form[] = ['label'=>'Mail','name'=>'mail','type'=>'email','validation'=>'required|min:1|max:255|email|unique:alumnos','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'DNI','name'=>'DNI','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'Domicilio','name'=>'Domicilio','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'Ciudad','name'=>'ciudad','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+
+			$this->form[] = ["label"=>"Detalles Administrativos","type"=>"header","name"=>"header"];
+
+			$this->form[] = ['label'=>'Condicion','name'=>'condicion','type'=>'radio','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'SOCIO;NO SOCIO'];
+			$this->form[] = ['label'=>'Titulo Profesional','name'=>'titulo_profesional','type'=>'text','validation'=>'','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Localidad Convenio','name'=>'localidad_convenio','type'=>'text','validation'=>'','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Numero Matricula','name'=>'numero_matricula','type'=>'text','validation'=>'','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Presento Tif','name'=>'presento_tif','type'=>'radio','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'SI;NO'];
+			$this->form[] = ["label"=>"Observaciones","type"=>"header","name"=>"header"];
+
+			$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','validation'=>'','width'=>'col-sm-10'];
+
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Fecha Pago','name'=>'fecha_pago','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Modalidad de Pago','name'=>'tipos_pago_id','type'=>'select2','validation'=>'required','width'=>'col-sm-9','datatable'=>'tipos_pago,nombre'];
-			//$this->form[] = ['label'=>'Alumno','name'=>'alumno_id','type'=>'select2','validation'=>'required','width'=>'col-sm-9','datatable'=>'alumnos,nombre'];
-			//$this->form[] = ['label'=>'Monto Pagado','name'=>'monto_pagado','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','placeholder'=>'Ingresar solo números sin signos de $'];
-			//$this->form[] = ['label'=>'Numero de Cuota','name'=>'numero_cuota','type'=>'select2','validation'=>'required','width'=>'col-sm-10','dataenum'=>'1;2;3;4;5;6;7;8;9;10'];
-			//$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','validation'=>'min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Presentó Fotocopia','name'=>'Presentó Fotocopia','type'=>'checkbox','validation'=>'required','width'=>'col-sm-9','dataenum'=>'SI;NO'];
-			//$this->form[] = ['label'=>'Ref Nº','name'=>'Ref Nº','type'=>'text','width'=>'col-sm-9'];
+			//$this->form[] = ['label'=>'Nombre','name'=>'nombre','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Apellido','name'=>'apellido','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Mail','name'=>'mail','type'=>'email','validation'=>'required|min:1|max:255|email|unique:alumnos','width'=>'col-sm-10','placeholder'=>'Introduce una dirección de correo electrónico válida'];
+			//$this->form[] = ['label'=>'Ciudad','name'=>'ciudad','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Procedencia','name'=>'procedencia','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Condicion','name'=>'condicion','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Actividad Id','name'=>'actividad_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'actividades,nombre'];
+			//$this->form[] = ['label'=>'Localidad Convenio','name'=>'localidad_convenio','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Titulo Profesional','name'=>'titulo_profesional','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Numero Matricula','name'=>'numero_matricula','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Presento Tif','name'=>'presento_tif','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'DNI','name'=>'DNI','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			//$this->form[] = ['label'=>'Domicilio','name'=>'Domicilio','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
 			# OLD END FORM
 
 			/* 
@@ -73,8 +98,15 @@
 			| @button_icon    = Font Awesome Class  
 			| @parent_columns = Sparate with comma, e.g : name,created_at
 	        | 
-	        */
-	        $this->sub_module = array();
+	        
+			$this->sub_module = array();*/
+			if (CRUDBooster::myPrivilegeName() !== 'Tesoreria'){
+				$this->sub_module[] = ['label'=>'Gestionar Asistencia','path'=>'asistencias','parent_columns'=>'nombre','parent_columns_alias'=>'Gestionando asistencias de alumno','foreign_key'=>'alumno_id','button_color'=>'success','button_icon'=>'fa fa-bars'];
+			}
+			
+			if (CRUDBooster::myPrivilegeName() == 'Tesoreria'){
+				$this->sub_module[] = ['label'=>'Lista de Pagos','path'=>'pagos','parent_columns'=>'nombre','parent_columns_alias'=>'Listando pagos de alumno','foreign_key'=>'alumno_id','button_color'=>'success','button_icon'=>'fa fa-bars'];
+			}
 
 
 	        /* 
@@ -247,7 +279,13 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	            
+			if (CRUDBooster::myPrivilegeName() == 'Capacitador' ){
+				$id = CRUDBooster::myId();
+				$idCurso = DB::table('cms_users')->where('id', $id)->pluck('actividad_id');
+				$query->where('actividad_id',$idCurso);
+
+
+			}    
 	    }
 
 	    /*
@@ -279,8 +317,17 @@
 	    | @id = last insert id
 	    | 
 	    */
-	    public function hook_after_add($id) {        
-	        //Your code here
+	    public function hook_after_add($id) {
+		 
+			
+			$idCurso = DB::table('alumnos')->where('id', $id)->pluck('actividad_id');
+			$clases = DB::table('clases')->where('actividad_id',$idCurso)->get();
+		
+			foreach ($clases as $clase){
+			  DB::table('asistencias')->insertGetId(
+				array('alumno_id' => $id, 'clase_id' => $clase->id, 'asistio'=> "SIN DEFINIR")
+			);
+			}
 
 	    }
 

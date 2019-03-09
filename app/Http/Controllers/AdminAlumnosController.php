@@ -10,9 +10,9 @@
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "id";
+			$this->title_field = "nombre";
 			$this->limit = "20";
-			$this->orderby = "id,desc";
+			$this->orderby = "apellido,asc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -24,14 +24,14 @@
 			$this->button_show = true;
 			$this->button_filter = true;
 			$this->button_import = false;
-			$this->button_export = false;
+			$this->button_export = true;
 			$this->table = "alumnos";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Nombre","name"=>"nombre"];
 			$this->col[] = ["label"=>"Apellido","name"=>"apellido"];
+			$this->col[] = ["label"=>"Nombre","name"=>"nombre"];
 			$this->col[] = ["label"=>"Telefono","name"=>"telefono"];
 			$this->col[] = ["label"=>"Mail","name"=>"mail"];
 			$this->col[] = ["label"=>"Inscripto A","name"=>"actividad_id","join"=>"actividades,nombre"];
@@ -39,56 +39,53 @@
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ["label"=>"Detalles Personales","type"=>"header","name"=>"header"];
-
+			$this->form[] = ['label'=>'Detalles Personales','name'=>'header','type'=>'header','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Nombre','name'=>'nombre','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Apellido','name'=>'apellido','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			if (CRUDBooster::myPrivilegeName() !== 'Capacitador'){
-				$this->form[] = ['label'=>'Actividad Académica','name'=>'actividad_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'actividades,nombre'];
-			}
-			
-			
-			
-			$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','placeholder'=>'Introduce una dirección de correo electrónico válida'];
-			$this->form[] = ['label'=>'Mail','name'=>'mail','type'=>'email','validation'=>'required|min:1|max:255|email|unique:alumnos','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Actividad Académica','name'=>'actividad_id','type'=>'select2','validation'=>'integer|min:0','width'=>'col-sm-10','datatable'=>'actividades,nombre'];
+			$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'text','validation'=>'min:1|max:255','width'=>'col-sm-10','placeholder'=>'Introduce una dirección de correo electrónico válida'];
+			$this->form[] = ['label'=>'Mail','name'=>'mail','type'=>'email','validation'=>'min:1|max:255|email|unique:alumnos','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'DNI','name'=>'DNI','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
 			$this->form[] = ['label'=>'Domicilio','name'=>'Domicilio','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
-			$this->form[] = ['label'=>'Ciudad','name'=>'ciudad','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-
-			$this->form[] = ["label"=>"Detalles Administrativos","type"=>"header","name"=>"header"];
-	
-			if (CRUDBooster::myPrivilegeName() !== 'Capacitador' || CRUDBooster::isSuperadmin()){
-
-			$this->form[] = ['label'=>'Modalidad de Pago','name'=>'tipos_pago_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'tipos_pago,nombre'];
-			}
-			$this->form[] = ['label'=>'Condicion','name'=>'condicion','type'=>'radio','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'SOCIO;NO SOCIO'];
-			$this->form[] = ['label'=>'Titulo Profesional','name'=>'titulo_profesional','type'=>'text','validation'=>'','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Localidad Convenio','name'=>'localidad_convenio','type'=>'text','validation'=>'','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Numero Matricula','name'=>'numero_matricula','type'=>'text','validation'=>'','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Presento Tif','name'=>'presento_tif','type'=>'radio','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'SI;NO'];
-			$this->form[] = ["label"=>"Observaciones","type"=>"header","name"=>"header"];
-
-			$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','validation'=>'','width'=>'col-sm-10'];
-
+			$this->form[] = ['label'=>'Ciudad','name'=>'ciudad','type'=>'text','validation'=>'min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Detalles Administrativos','name'=>'header','type'=>'header','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Condicion','name'=>'condicion','type'=>'radio','validation'=>'min:1|max:255','width'=>'col-sm-10','dataenum'=>'SOCIO;NO SOCIO'];
+			$this->form[] = ['label'=>'Titulo Profesional','name'=>'titulo_profesional','type'=>'text','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Localidad Convenio','name'=>'localidad_convenio','type'=>'text','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Numero Matricula','name'=>'numero_matricula','type'=>'text','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Presento Tif','name'=>'presento_tif','type'=>'radio','validation'=>'min:1|max:255','width'=>'col-sm-10','dataenum'=>'SI;NO'];
+			$this->form[] = ['label'=>'Observaciones','name'=>'header','type'=>'header','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
+			//$this->form[] = ["label"=>"Detalles Personales","type"=>"header","name"=>"header"];
+			//
 			//$this->form[] = ['label'=>'Nombre','name'=>'nombre','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Apellido','name'=>'apellido','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Mail','name'=>'mail','type'=>'email','validation'=>'required|min:1|max:255|email|unique:alumnos','width'=>'col-sm-10','placeholder'=>'Introduce una dirección de correo electrónico válida'];
-			//$this->form[] = ['label'=>'Ciudad','name'=>'ciudad','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Procedencia','name'=>'procedencia','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Condicion','name'=>'condicion','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Actividad Id','name'=>'actividad_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'actividades,nombre'];
-			//$this->form[] = ['label'=>'Localidad Convenio','name'=>'localidad_convenio','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Titulo Profesional','name'=>'titulo_profesional','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Numero Matricula','name'=>'numero_matricula','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Presento Tif','name'=>'presento_tif','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//if (CRUDBooster::myPrivilegeName() !== 'Capacitador'){
+			//$this->form[] = ['label'=>'Actividad Académica','name'=>'actividad_id','type'=>'select2','validation'=>'integer|min:0','width'=>'col-sm-10','datatable'=>'actividades,nombre'];
+			//}
+			//
+			//
+			//
+			//$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'text','validation'=>'min:1|max:255','width'=>'col-sm-10','placeholder'=>'Introduce una dirección de correo electrónico válida'];
+			//$this->form[] = ['label'=>'Mail','name'=>'mail','type'=>'email','validation'=>'min:1|max:255|email|unique:alumnos','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'DNI','name'=>'DNI','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
 			//$this->form[] = ['label'=>'Domicilio','name'=>'Domicilio','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			//$this->form[] = ['label'=>'Ciudad','name'=>'ciudad','type'=>'text','validation'=>'min:1|max:255','width'=>'col-sm-10'];
+			//
+			//$this->form[] = ["label"=>"Detalles Administrativos","type"=>"header","name"=>"header"];
+			//
+			//$this->form[] = ['label'=>'Condicion','name'=>'condicion','type'=>'radio','validation'=>'min:1|max:255','width'=>'col-sm-10','dataenum'=>'SOCIO;NO SOCIO'];
+			//$this->form[] = ['label'=>'Titulo Profesional','name'=>'titulo_profesional','type'=>'text','validation'=>'','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Localidad Convenio','name'=>'localidad_convenio','type'=>'text','validation'=>'','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Numero Matricula','name'=>'numero_matricula','type'=>'text','validation'=>'','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Presento Tif','name'=>'presento_tif','type'=>'radio','validation'=>'min:1|max:255','width'=>'col-sm-10','dataenum'=>'SI;NO'];
+			//$this->form[] = ["label"=>"Observaciones","type"=>"header","name"=>"header"];
+			//
+			//$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','validation'=>'','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/* 

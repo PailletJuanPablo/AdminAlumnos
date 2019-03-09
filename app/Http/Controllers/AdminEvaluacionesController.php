@@ -243,7 +243,20 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	            
+			if (CRUDBooster::myPrivilegeName() == 'Capacitador' ){
+				$id = CRUDBooster::myId();
+				$idCurso = DB::table('cms_users')->where('id', $id)->first()->actividad_id;
+                $alumnosCurso = DB::table("alumnos")->where("actividad_id",$idCurso)->get();
+                $ids_alumnos = [];
+
+                foreach($alumnosCurso as $alumno){
+                    array_push($ids_alumnos,$alumno->id);
+                }
+
+				$query->whereIn('alumno_id', $ids_alumnos);
+
+
+			}
 	    }
 
 	    /*

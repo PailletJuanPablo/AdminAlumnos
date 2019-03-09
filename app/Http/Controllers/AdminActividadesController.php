@@ -12,7 +12,7 @@
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 			$this->title_field = "id";
 			$this->limit = "20";
-			$this->orderby = "id,desc";
+			$this->orderby = "nombre,asc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -33,6 +33,7 @@
 			$this->col[] = ["label"=>"Nombre","name"=>"nombre"];
 			$this->col[] = ["label"=>"Descripcion","name"=>"descripcion"];
 			$this->col[] = ["label"=>"Observaciones","name"=>"observaciones"];
+			$this->col[] = ["label"=>"Año","name"=>"Año"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -41,14 +42,15 @@
 			$this->form[] = ['label'=>'Descripcion','name'=>'descripcion','type'=>'text','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Imagen','name'=>'imagen','type'=>'filemanager','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Año','name'=>'Año','type'=>'select','width'=>'col-sm-9','dataenum'=>'2015;2016;2017;2018;2019'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
 			//$this->form[] = ['label'=>'Nombre','name'=>'nombre','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Descripcion','name'=>'descripcion','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Descripcion','name'=>'descripcion','type'=>'text','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Imagen','name'=>'imagen','type'=>'filemanager','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/* 
