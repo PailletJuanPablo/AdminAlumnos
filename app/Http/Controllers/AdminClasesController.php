@@ -271,20 +271,15 @@ class AdminClasesController extends \crocodicstudio\crudbooster\controllers\CBCo
     public function hook_after_add($id)
     {
         //Your code here
-
         $idActividad = DB::table('clases')->where('id', $id)->pluck('actividad_id');
         $alumnos = DB::table('alumnos')->where('actividad_id', $idActividad)->get();
         foreach ($alumnos as $alumno) {
-
             if (DB::table('asistencias')->where('alumno_id', '=', $alumno->id)->where('clase_id', '=', $id)->exists()) {
-
             } else {
                 DB::table('asistencias')->insertGetId(
-                    array('alumno_id' => $alumno->id, 'clase_id' => $id, 'asistio' => "SIN DEFINIR"));
+                    array('alumno_id' => $alumno->id, 'clase_id' => $id, 'asistio' => "SI"));
             }
-
         }
-
     }
 
     /*

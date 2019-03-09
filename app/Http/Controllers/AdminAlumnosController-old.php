@@ -283,8 +283,6 @@
 				$id = CRUDBooster::myId();
 				$idCurso = DB::table('cms_users')->where('id', $id)->pluck('actividad_id');
 				$query->where('actividad_id',$idCurso);
-
-
 			}    
 	    }
 

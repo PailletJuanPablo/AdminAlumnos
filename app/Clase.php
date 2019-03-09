@@ -10,7 +10,6 @@ class Clase extends Model
     protected $table = 'clases';
     public $timestamps = true;
 
-    use SoftDeletes;
 
     protected $fillable = array('fecha', 'nombre', 'actividad_id');
 

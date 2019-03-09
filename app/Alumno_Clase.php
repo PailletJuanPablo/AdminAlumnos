@@ -6,24 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alumno_Clase extends Model
 {
-    protected $table = 'alumnos_clases';
+    protected $table = 'asistencias';
     public $timestamps = true;
 
-    use SoftDeletes;
 
-    protected $fillable = array('alumno_id', 'clase_id', 'asistio','observaciones');
+    protected $fillable = array('alumno_id', 'clase_id', 'asistio', 'observaciones');
 
-    public function alumnos()
-{
-    return $this->belongsToMany('App\Alumno');
-    
-}
+    public function alumno()
+    {
+        return $this->belongsTo('App\Alumno');
+    }
 
-public function clase()
-{
-    return $this->belongsToMany('App\Clase');
-    
-}
-
-
+    public function clase()
+    {
+        return $this->belongsTo('App\Clase');
+    }
 }

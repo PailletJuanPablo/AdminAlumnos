@@ -33,4 +33,8 @@ class Alumno extends Model
         return $this->belongsTo('App\Actividad');
     }
 
+    public function asistencias(){
+        return $this->hasMany('App\Alumno_clase', 'alumno_id');
+    }
+
 }
