@@ -80,8 +80,14 @@
 	        | @showIf 	   = If condition when action show. Use field alias. e.g : [id] == 1
 	        | 
 	        */
-	        $this->addaction = array();
-
+			if (CRUDBooster::myPrivilegeName() == 'Capacitador' || CRUDBooster::isSuperadmin()){
+				$course_id = [id];
+				$this->addaction = array(["label" => "Gestionar Asistencia",
+				"url" => 'http://regional.esy.es/AdminAlumnos/public/admin/update_asistencia_admin/[id]',
+				]);
+					
+				
+			};
 
 	        /* 
 	        | ---------------------------------------------------------------------- 

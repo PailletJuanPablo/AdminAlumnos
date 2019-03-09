@@ -75,4 +75,34 @@ class AsistenciaController extends Controller
     return response()->json($asistencia);
 
   }
+
+
+  public function gestionAdmin($id){
+    $curso = Actividad::find($id);
+    $clases = Clase::where('actividad_id', $id)->get();
+    $this->clases = $clases;
+    $alumnos =
+      Alumno::with(
+        [
+          'asistencias' => function ($query) {
+            $query->whereIn('clase_id', $this->clases->pluck('id')
+          );
+          },
+          'asistencias.clase'
+        ]
+      )
+      ->where('actividad_id', $curso->id)->get();
+
+    $asistencias = Alumno_Clase::with('alumno', 'clase')->whereIn('clase_id', $clases->pluck('id'))
+    
+    ->get();
+
+    return view('asistencias.interactive', [
+      "clases" => $clases,
+      "asistencias" => $asistencias,
+      "curso" => $curso,
+      "alumnos" => $alumnos
+    ]);
+  }
+
 }

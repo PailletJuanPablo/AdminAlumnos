@@ -42,7 +42,9 @@ class AdminClasesController extends \crocodicstudio\crudbooster\controllers\CBCo
 
         # START FORM DO NOT REMOVE THIS LINE
         $this->form = [];
-        $this->form[] = ['label' => 'Actividad Académica', 'name' => 'actividad_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'actividades,nombre'];
+        if (CRUDBooster::myPrivilegeName() == 'Capacitador' || CRUDBooster::isSuperadmin()){
+            $this->form[] = ['label' => 'Actividad Académica', 'name' => 'actividad_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'actividades,nombre'];
+        }
         $this->form[] = ['label' => 'Fecha', 'name' => 'fecha', 'type' => 'date', 'validation' => 'required|date', 'width' => 'col-sm-10'];
         $this->form[] = ['label' => 'Observaciones', 'name' => 'observaciones', 'type' => 'textarea', 'width' => 'col-sm-9'];
         # END FORM DO NOT REMOVE THIS LINE
@@ -64,6 +66,8 @@ class AdminClasesController extends \crocodicstudio\crudbooster\controllers\CBCo
         //$this->form[] = ['label'=>'Fecha','name'=>'fecha','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
         //$this->form[] = ['label'=>'Observaciones','name'=>'observaciones','type'=>'textarea','width'=>'col-sm-9'];
         # OLD END FORM
+
+    
 
         /*
         | ----------------------------------------------------------------------
@@ -258,6 +262,11 @@ class AdminClasesController extends \crocodicstudio\crudbooster\controllers\CBCo
     public function hook_before_add(&$postdata)
     {
         //Your code here
+        if(!$postdata->actividad_id){
+            $id = CRUDBooster::myId();
+            $idCurso = DB::table('cms_users')->find($id)->actividad_id;
+            $postdata['actividad_id'] = $idCurso;
+        }
 
     }
 
