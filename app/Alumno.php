@@ -34,7 +34,7 @@ class Alumno extends Model
     }
 
     public function asistencias(){
-        return $this->hasMany('App\Alumno_clase', 'alumno_id');
+        return $this->hasMany('App\Alumno_Clase', 'alumno_id');
     }
 
 }
