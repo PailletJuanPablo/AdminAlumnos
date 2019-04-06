@@ -184,7 +184,8 @@
 			if(Request::input('parent_id')){
 				$parent = Request::input('parent_id');
 				$this->index_statistic[] = ['label'=>'Total de Alumnos del curso','count'=>DB::table('alumnos')->where('actividad_id', $parent)->count(),'icon'=>'fa fa-check','color'=>'success'];
-
+			}else{
+				$this->index_statistic[] = ['label'=>'Total de Alumnos del curso','count'=>DB::table('alumnos')->where('actividad_id', 2)->count(),'icon'=>'fa fa-check','color'=>'success'];
 			}
 
 
