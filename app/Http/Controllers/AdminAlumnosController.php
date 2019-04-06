@@ -171,7 +171,12 @@
 	        | @label, @count, @icon, @color 
 	        |
 	        */
-	        $this->index_statistic = array();
+			$this->index_statistic = array();
+			
+			if(Request::get('parent_id')){
+				$parent = Request::get('parent_id');
+				$this->index_statistic[] = ['label'=>'Total de Alumnos del curso','count'=>DB::table('alumnos')->where('actividad_id', $parent)->count(),'icon'=>'fa fa-check','color'=>'success'];
+			}
 
 
 
