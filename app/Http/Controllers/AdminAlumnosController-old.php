@@ -181,6 +181,11 @@
 	        */
 	        $this->index_statistic = array();
 
+			if(Request::input('parent_id')){
+				$parent = Request::input('parent_id');
+				$this->index_statistic[] = ['label'=>'Total de Alumnos del curso','count'=>DB::table('alumnos')->where('actividad_id', $parent)->count(),'icon'=>'fa fa-check','color'=>'success'];
+
+			}
 
 
 	        /*
@@ -201,8 +206,9 @@
 	        | html code to display it before index table
 	        | $this->pre_index_html = "<p>test</p>";
 	        |
-	        */
-	        $this->pre_index_html = null;
+			*/
+			
+			$this->pre_index_html = null;
 	        
 	        
 	        
@@ -213,7 +219,7 @@
 	        | html code to display it after index table
 	        | $this->post_index_html = "<p>test</p>";
 	        |
-	        */
+			*/
 	        $this->post_index_html = null;
 	        
 	        
@@ -293,7 +299,7 @@
 	    |
 	    */    
 	    public function hook_row_index($column_index,&$column_value) {	        
-	    	//Your code here
+			//Your code here
 	    }
 
 	    /*

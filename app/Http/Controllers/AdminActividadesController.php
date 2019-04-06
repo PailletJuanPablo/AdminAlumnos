@@ -66,7 +66,12 @@
 	        | 
 	        */
 	        $this->sub_module = array();
-			$this->sub_module[] = ['label'=>'Ver Alumnos de Curso','path'=>'alumnos','parent_columns'=>'nombre','parent_columns_alias'=>'Viendo alumnos del curso','foreign_key'=>'actividad_id','button_color'=>'success','button_icon'=>'fa fa-bars'];
+			$this->sub_module[] = 
+			['label'=>'Ver Alumnos de Curso',
+			'path'=>'alumnos',
+			'parent_columns'=>'nombre',
+			'parent_columns_alias'=>'Viendo alumnos del curso','foreign_key'=>'actividad_id',
+			'button_color'=>'success','button_icon'=>'fa fa-bars'];
 
 
 	        /* 
@@ -85,8 +90,6 @@
 				$this->addaction = array(["label" => "Gestionar Asistencia",
 				"url" => 'http://regional.esy.es/AdminAlumnos/public/admin/update_asistencia_admin/[id]',
 				]);
-					
-				
 			};
 
 	        /* 
@@ -146,7 +149,6 @@
 	        |
 	        */
 	        $this->index_statistic = array();
-
 
 
 	        /*
@@ -245,7 +247,6 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	            
 	    }
 
 	    /*
