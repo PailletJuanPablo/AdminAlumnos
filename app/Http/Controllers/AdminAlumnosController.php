@@ -14,7 +14,11 @@ class AdminAlumnosController extends \crocodicstudio\crudbooster\controllers\CBC
         # START CONFIGURATION DO NOT REMOVE THIS LINE
         $this->title_field = "nombre";
         $this->limit = "20";
-        $this->orderby = "apellido,asc";
+        if (CRUDBooster::isSuperadmin()) {
+            $this->orderby = "nro_orden,asc";
+        } else {
+            $this->orderby = "nombre,asc";
+        }
         $this->global_privilege = false;
         $this->button_table_action = true;
         $this->button_bulk_action = true;
