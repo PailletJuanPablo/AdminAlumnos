@@ -44,12 +44,11 @@ class AsistenciaController extends Controller
           'asistencias.clase'
         ]
       )
-      ->orderBy('apellido', 'asc')
       ->where('actividad_id', $curso->id)->get();
 
-    $asistencias = Alumno_Clase::with('alumno', 'clase')->whereIn('clase_id', $clases->pluck('id'))
-    
-    ->get();
+    $asistencias = Alumno_Clase::with('alumno', 'clase')->whereIn('clase_id', $clases->pluck('id'))->get();
+
+    return response()->json(['alumnos' => $alumnos]);
 
     return view('asistencias.interactive', [
       "clases" => $clases,
@@ -92,11 +91,14 @@ class AsistenciaController extends Controller
           'asistencias.clase'
         ]
       )
+      ->orderBy('apellido')
       ->where('actividad_id', $curso->id)->get();
 
     $asistencias = Alumno_Clase::with('alumno', 'clase')->whereIn('clase_id', $clases->pluck('id'))
     
     ->get();
+
+
 
     return view('asistencias.interactive', [
       "clases" => $clases,
