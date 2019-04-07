@@ -2,7 +2,13 @@
 @section('content')
 
 <div>
-    <h4> Gestiónando asistencias del curso {{$curso->nombre}} </h4>
+    <div class="card">
+            <h4> Gestionando asistencias del curso {{$curso->nombre}} </h4>
+            @if(count($clases) == 0)
+                <h3 style="font-weight: bold; color: red"> Para poder gestionar las asistencias es necesario agregar clases en el apartado "Clases" </h3>
+            
+            @endif
+    </div>
     <table class="table table-hover table-striped table-bordered">
         <thead>
             <tr>

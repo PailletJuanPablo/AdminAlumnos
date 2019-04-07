@@ -42,8 +42,11 @@ class AdminClasesController extends \crocodicstudio\crudbooster\controllers\CBCo
 
         # START FORM DO NOT REMOVE THIS LINE
         $this->form = [];
-        if (CRUDBooster::myPrivilegeName() == 'Capacitador' || CRUDBooster::isSuperadmin()){
+        if (CRUDBooster::isSuperadmin()){
             $this->form[] = ['label' => 'Actividad Académica', 'name' => 'actividad_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'actividades,nombre'];
+        }else if(CRUDBooster::myPrivilegeName() == 'Capacitador'){
+            $this->form[] = ['label' => 'Actividad Académica', 'name' => 'actividad_id', 'type' => 'hidden', "value"=> $idCurso];
+
         }
         $this->form[] = ['label' => 'Fecha', 'name' => 'fecha', 'type' => 'date', 'validation' => 'required|date', 'width' => 'col-sm-10'];
         $this->form[] = ['label' => 'Observaciones', 'name' => 'observaciones', 'type' => 'textarea', 'width' => 'col-sm-9'];
