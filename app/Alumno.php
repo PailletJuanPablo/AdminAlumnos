@@ -15,7 +15,7 @@ class Alumno extends Model
 
     protected $fillable = array('nombre', 'apellido', 'telefono', 'mail', 
     'ciudad', 'procedencia', 'observaciones','condicion', 
-    'actividad_id','localidad_convenio', 'titulo_profesional', 'numero_matricula', 'presento_tif','domicilio','dni');
+    'actividad_id','localidad_convenio', 'titulo_profesional', 'numero_matricula', 'presento_tif','domicilio','dni', 'nro_orden');
 
 
     public function pago()
