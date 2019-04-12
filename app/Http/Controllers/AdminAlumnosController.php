@@ -177,21 +177,20 @@ class AdminAlumnosController extends \crocodicstudio\crudbooster\controllers\CBC
 		$this->index_statistic = array();
 		
 
-      
         if (Request::get('parent_id')) {
 
             $parent = Request::get('parent_id');
 
-            $alumnos = Alumno::where('actividad_id', $parent)->orderBy('id')->get();
+            $alumnos = Alumno::where('actividad_id', $parent)->orderBy('apellido')->get();
             if ($alumnos) {
                 $indexAl = 1;
                 foreach ($alumnos as $alumno) {
-                    if (!$alumno->nro_orden) {
+                  
                         $alumnoToAdd = Alumno::find($alumno->id);
                         $alumnoToAdd->nro_orden = $indexAl;
                         $alumnoToAdd->save();
                         $indexAl++;
-                    }
+                    
 
                 }
             };
